@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The IAH Creations - Digital Business Card</title>
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-glow: #00f2ff;
+        --secondary-glow: #bd00ff;
+        --card-bg: rgba(15, 15, 35, 0.95);
+        --glass-border: rgba(255, 255, 255, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0a0a0a 0%,
+          #1a1a2e 50%,
+          #16213e 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: white;
+      }
+
+      /* Card Container */
+      .card-container {
+        position: relative;
+        width: 350px;
+        height: 550px;
+        perspective: 1000px;
+        cursor: pointer;
+      }
+
+      .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border-radius: 20px;
+        background: var(--card-bg);
+        border: 1px solid var(--glass-border);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 3rem 1.5rem;
+      }
+
+      .card-front {
+        transform: rotateY(0deg);
+      }
+
+      .card-back {
+        transform: rotateY(180deg);
+      }
+
+      .card-container.flipped .card-front {
+        transform: rotateY(-180deg);
+      }
+
+      .card-container.flipped .card-back {
+        transform: rotateY(0deg);
+      }
+
+      /* Holographic/Glow Effects */
+      .glow-spot {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: var(--primary-glow);
+        filter: blur(80px);
+        opacity: 0.4;
+        top: -50px;
+        left: -50px;
+        z-index: 0;
+        animation: pulse 4s infinite alternate;
+      }
+
+      .glow-spot-2 {
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: var(--secondary-glow);
+        filter: blur(80px);
+        opacity: 0.3;
+        bottom: -50px;
+        right: -50px;
+        z-index: 0;
+        animation: pulse 4s infinite alternate-reverse;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.3;
+        }
+        100% {
+          transform: scale(1.2);
+          opacity: 0.5;
+        }
+      }
+
+      /* Typography & Branding */
+      .logo-container {
+        z-index: 1;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .logo-icon {
+        font-size: 3rem;
+        background: linear-gradient(135deg, var(--primary-glow), white);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1rem;
+        filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.5));
+      }
+
+      .brand-name {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+      }
+
+      .tagline {
+        font-family: "Inter", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.5;
+        text-align: center;
+        max-width: 90%;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding-top: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .highlight {
+        color: var(--primary-glow);
+      }
+
+      /* Back Side Elements */
+      .qr-frame {
+        position: relative;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 1rem;
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+      }
+
+      .qr-code {
+        width: 140px;
+        height: 140px;
+        background-color: white; /* Placeholder for actual QR */
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000;
+        font-size: 0.8rem;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .qr-code img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+      }
+
+      .cta-text {
+        font-size: 0.9rem;
+        color: var(--primary-glow);
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        z-index: 10;
+      }
+
+      .action-btn {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: white;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
+      }
+
+      .action-btn i {
+        width: 24px;
+        font-size: 1.1rem;
+        margin-right: 10px;
+        text-align: center;
+      }
+
+      .action-btn:hover {
+        background: rgba(0, 242, 255, 0.15);
+        border-color: var(--primary-glow);
+        transform: translateX(5px);
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+      }
+
+      /* Specific Button Colors on Hover */
+      .btn-wa:hover {
+        color: #25d366;
+        border-color: #25d366;
+        background: rgba(37, 211, 102, 0.1);
+      }
+      .btn-li:hover {
+        color: #0077b5;
+        border-color: #0077b5;
+        background: rgba(0, 119, 181, 0.1);
+      }
+      .btn-web:hover {
+        color: #bd00ff;
+        border-color: #bd00ff;
+        background: rgba(189, 0, 255, 0.1);
+      }
+      .btn-save {
+        background: linear-gradient(
+          90deg,
+          var(--primary-glow),
+          var(--secondary-glow)
+        );
+        border: none;
+        font-weight: bold;
+        justify-content: center;
+        margin-top: 10px;
+        color: black;
+      }
+      .btn-save:hover {
+        opacity: 0.9;
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+        color: black;
+      }
+
+      .flip-instruction {
+        position: absolute;
+        bottom: 20px;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-5px);
+        }
+        60% {
+          transform: translateY(-3px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card-container" id="card" onclick="flipCard()">
+      <!-- FRONT SIDE -->
+      <div class="card-face card-front">
+        <div class="glow-spot"></div>
+        <div class="glow-spot-2"></div>
+
+        <div class="logo-container">
+          <div class="logo-icon">
+            <i class="fa-solid fa-cube"></i>
+            <!-- Abstract Cube Logo -->
+          </div>
+          <h1 class="brand-name">THE IAH<br />CREATIONS</h1>
+        </div>
+
+        <p class="tagline">
+          Rapid Prototypes in 24 Hours<br />
+          <span class="highlight">Web & App Innovators</span>
+        </p>
+
+        <div class="flip-instruction">
+          <i class="fa-solid fa-arrow-rotate-right"></i> Tap to Flip
+        </div>
+      </div>
+
+      <!-- BACK SIDE -->
+      <div class="card-face card-back">
+        <div class="glow-spot"></div>
+
+        <div class="qr-frame">
+          <!-- Replace src with your actual QR code image URL or keep placeholder -->
+          <div class="qr-code">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://the-iah-creations.pages.dev/&color=000000"
+              alt="QR Code"
+            />
+          </div>
+        </div>
+
+        <div class="cta-text">Scan to Connect</div>
+
+        <div class="actions">
+          <a
+            href="https://wa.me/918816911002"
+            class="action-btn btn-wa"
+            target="_blank"
+            rel="noopener"
+            onclick="event.stopPropagation()"
+          >
+            <i class="fab fa-whatsapp"></i> +91 88169 11002
+          </a>
+
+          <a
+            href="mailto:theiahcreations@gmail.com"
+            class="action-btn"
+            target="_blank"
+            rel="noopener"
+            onclick="event.stopPropagation()"
+          >
+            <i class="fa-regular fa-envelope"></i> Email Us
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/harshulaggarwal004?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            class="action-btn btn-li"
+            target="_blank"
+            rel="noopener"
+            onclick="event.stopPropagation()"
+          >
+            <i class="fab fa-linkedin-in"></i> LinkedIn Profile
+          </a>
+
+          <a
+            href="https://the-iah-creations.pages.dev/"
+            class="action-btn btn-web"
+            target="_blank"
+            rel="noopener"
+            onclick="event.stopPropagation()"
+          >
+            <i class="fa-solid fa-globe"></i> Visit Portfolio
+          </a>
+
+          <!-- VCF Download Button -->
+          <a href="#" class="action-btn btn-save" onclick="downloadVcf(event)">
+            <i class="fa-solid fa-user-plus"></i> Save Contact
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function flipCard() {
+        document.getElementById("card").classList.toggle("flipped");
+      }
+
+      function downloadVcf(event) {
+        event.stopPropagation(); // Prevent card flip when clicking button
+
+        const vcardData = `BEGIN:VCARD
+VERSION:3.0
+FN:The IAH Creations
+ORG:The IAH Creations
+TITLE:Web & App Innovators
+TEL;TYPE=WORK,VOICE:+918816911002
+EMAIL;TYPE=WORK:theiahcreations@gmail.com
+URL:https://the-iah-creations.pages.dev/
+URL;TYPE=LINKEDIN:https://www.linkedin.com/in/harshulaggarwal004
+NOTE:Rapid Prototypes in 24 Hours
+END:VCARD`;
+
+        const blob = new Blob([vcardData], { type: "text/vcard" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = "The_IAH_Creations.vcf";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+    </script>
+  </body>
+</html>
