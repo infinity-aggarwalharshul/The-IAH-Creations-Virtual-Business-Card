@@ -1,0 +1,51 @@
+{
+  "name": "virtual-business-card",
+  "version": "1.0.0",
+  "description": "A modern, interactive digital business card with holographic effects and smooth animations",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server .",
+    "build": "echo 'No build process needed for static HTML'",
+    "test": "echo 'No tests specified'",
+    "lint": "npx htmlhint index.html && npx stylelint **/*.css",
+    "format": "npx prettier --write ."
+  },
+  "keywords": [
+    "business-card",
+    "digital-card",
+    "virtual-card",
+    "web-design",
+    "css-animations",
+    "glassmorphism",
+    "holographic",
+    "responsive",
+    "qr-code",
+    "vcard"
+  ],
+  "author": "The IAH Creations",
+  "license": "MIT",
+  "homepage": "https://the-iah-creations.pages.dev/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/virtual-business-card.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/virtual-business-card/issues"
+  },
+  "devDependencies": {
+    "htmlhint": "^1.1.4",
+    "live-server": "^1.2.2",
+    "prettier": "^3.0.0",
+    "serve": "^14.2.0",
+    "stylelint": "^15.10.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
